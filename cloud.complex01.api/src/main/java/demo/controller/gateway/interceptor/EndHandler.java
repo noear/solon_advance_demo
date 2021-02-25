@@ -10,7 +10,7 @@ import org.noear.solon.core.handle.Handler;
  * @author noear 2021/2/10 created
  */
 public class EndHandler implements Handler {
-    Logger logger = LoggerFactory.get(EndHandler.class);
+    static Logger log = LoggerFactory.getLogger(EndHandler.class);
 
     @Override
     public void handle(Context c) throws Throwable {
@@ -22,12 +22,12 @@ public class EndHandler implements Handler {
 
         //记录接口输入输出日志
         if (c.result != null) {
-            logger.info(Tags.tag0(c.pathNew()), "\ni:: {}\no:: {}", c.paramMap(), c.result);
+            log.info(Tags.tag0(c.pathNew()), "\ni:: {}\no:: {}", c.paramMap(), c.result);
         }
 
         //记录异常
         if (c.errors != null) {
-            logger.error(Tags.tag0(c.pathNew()), "\ni:: {}\no:: {}", c.paramMap(), c.errors);
+            log.error(Tags.tag0(c.pathNew()), "\ni:: {}\no:: {}", c.paramMap(), c.errors);
         }
     }
 }
