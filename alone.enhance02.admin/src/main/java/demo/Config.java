@@ -1,5 +1,6 @@
 package demo;
 
+import org.noear.solon.Solon;
 import org.noear.solon.annotation.Configuration;
 import org.noear.water.WW;
 import org.noear.water.WaterClient;
@@ -20,5 +21,18 @@ public class Config {
         } else {
             return WaterClient.Config.getByTagKey(key);
         }
+    }
+
+    public static void tryInit() {
+        WaterClient.Config.getProperties(WW.water_session).forEach((k, v) -> {
+            if (Solon.cfg().isDebugMode()) {
+                String key = k.toString();
+                if (key.indexOf(".session.") < 0) {
+                    Solon.cfg().put(k, v);
+                }
+            } else {
+                Solon.cfg().put(k, v);
+            }
+        });
     }
 }

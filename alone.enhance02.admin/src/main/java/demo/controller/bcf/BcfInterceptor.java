@@ -32,16 +32,16 @@ public class BcfInterceptor extends BcfInterceptorBase {
             return;
         }
 
-        if (Solon.cfg().isWhiteMode()) {
-            if (ctx.uri().getHost().indexOf("localhost") < 0) {
-                String ip = IPUtils.getIP(ctx);
-                if (WaterClient.Whitelist.existsOfClientAndServerIp(ip) == false) {
-                    ctx.output(ip + ",not is whitelist!");
-                    ctx.setHandled(true);
-                    return;
-                }
-            }
-        }
+//        if (Solon.cfg().isWhiteMode()) {
+//            if (ctx.uri().getHost().indexOf("localhost") < 0) {
+//                String ip = IPUtils.getIP(ctx);
+//                if (WaterClient.Whitelist.existsOfClientAndServerIp(ip) == false) {
+//                    ctx.output(ip + ",not is whitelist!");
+//                    ctx.setHandled(true);
+//                    return;
+//                }
+//            }
+//        }
 
         super.verifyHandle(ctx);
     }
