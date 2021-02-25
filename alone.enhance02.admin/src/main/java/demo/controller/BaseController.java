@@ -31,6 +31,10 @@ public abstract class BaseController {
         viewModel.put("js", "/_static/js");
         viewModel.put("img", "/_static/img");
 
+        //仅演示用
+        viewModel.put("is_admin",1);
+        viewModel.put("is_operator",1);
+
         return viewModel.view(viewName + ".ftl");
     }
 
