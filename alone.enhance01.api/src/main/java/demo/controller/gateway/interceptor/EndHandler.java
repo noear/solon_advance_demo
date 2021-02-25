@@ -22,12 +22,12 @@ public class EndHandler implements Handler {
 
         //记录接口输入输出日志
         if (c.result != null) {
-            log.info(Tags.tag0(c.pathNew()), "\ni:: {}\no:: {}", c.paramMap(), c.result);
+            log.info(Tags.tag0(c.pathNew()), "::{}\r\n::{}", c.paramMap(), c.result);
         }
 
         //记录异常
         if (c.errors != null) {
-            log.error(Tags.tag0(c.pathNew()), "\ni:: {}\no:: {}", c.paramMap(), c.errors);
+            log.error(Tags.tag0(c.pathNew()), "::{}\r\no::{}", c.paramMap(), c.errors);
         }
     }
 }

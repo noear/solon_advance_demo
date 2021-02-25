@@ -28,8 +28,8 @@ public class ConfigService {
     }
 
     //设置配置（cache:列表型的只能删掉，单体的可以直接更新）
-    @CachePut(tags = "config_tag_key:${tag}_${key}")
     @CacheRemove(tags = "config_tag:${tag}")
+    @CachePut(tags = "config_tag_key:${tag}_${key}")
     public WaterCfgPropertiesDo setConfig(String tag, String key, String value) throws SQLException {
         //1.查找配置
         WaterCfgPropertiesDo cfg = mapper.getConfig(tag, key);

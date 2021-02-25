@@ -2,12 +2,15 @@ package demo;
 
 import com.zaxxer.hikari.HikariDataSource;
 import demo.controller.ApiCodes;
+import demo.utils.CacheWrap;
 import org.noear.solon.annotation.Bean;
 import org.noear.solon.annotation.Configuration;
 import org.noear.solon.annotation.Inject;
+import org.noear.solon.core.cache.CacheService;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.Result;
 import org.noear.solon.extend.validation.ValidatorFailureHandler;
+import org.noear.weed.cache.LocalCache;
 
 import javax.sql.DataSource;
 import java.lang.annotation.Annotation;
@@ -24,6 +27,11 @@ public class Config {
     @Bean("db1")
     public DataSource db1(@Inject("${test.db1}") HikariDataSource ds) {
         return ds;
+    }
+
+    @Bean
+    public CacheService cache(){
+        return new CacheWrap(new LocalCache());
     }
 
     /**
