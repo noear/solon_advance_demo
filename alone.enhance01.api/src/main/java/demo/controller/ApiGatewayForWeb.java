@@ -1,6 +1,6 @@
 package demo.controller;
 
-import demo.controller.trigger.*;
+import demo.controller.gateway.interceptor.*;
 import org.noear.snack.ONode;
 import org.noear.solon.Utils;
 import org.noear.solon.annotation.Controller;
@@ -14,7 +14,7 @@ import java.util.Base64;
  */
 @Mapping("/api/v1/web/")
 @Controller
-public class ApiGatewayForWeb extends ApiGateway {
+public class ApiGatewayForWeb extends ApiGatewayBase {
     @Override
     protected void register() {
         before(StartHandler.class);

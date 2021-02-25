@@ -1,4 +1,4 @@
-package demo.controller.trigger;
+package demo.controller.gateway.interceptor;
 
 import org.noear.mlog.Logger;
 import org.noear.mlog.LoggerFactory;

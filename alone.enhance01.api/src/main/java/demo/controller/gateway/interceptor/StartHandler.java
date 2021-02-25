@@ -1,4 +1,4 @@
-package demo.controller.trigger;
+package demo.controller.gateway.interceptor;
 
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.Handler;

@@ -1,6 +1,6 @@
 package demo.controller;
 
-import demo.controller.trigger.*;
+import demo.controller.gateway.interceptor.*;
 import org.noear.snack.ONode;
 import org.noear.solon.Utils;
 import org.noear.solon.annotation.Controller;

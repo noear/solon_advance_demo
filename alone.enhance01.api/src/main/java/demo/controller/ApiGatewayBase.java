@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * @author noear 2021/2/10 created
  */
-public abstract class ApiGateway extends Gateway {
+public abstract class ApiGatewayBase extends Gateway {
     @Override
     protected void register() {
         addBeans(bw -> "api".equals(bw.tag()));

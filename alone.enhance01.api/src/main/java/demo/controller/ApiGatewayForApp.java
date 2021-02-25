@@ -1,8 +1,8 @@
 package demo.controller;
 
-import demo.controller.trigger.EndHandler;
-import demo.controller.trigger.OutputHandler;
-import demo.controller.trigger.StartHandler;
+import demo.controller.gateway.interceptor.EndHandler;
+import demo.controller.gateway.interceptor.OutputHandler;
+import demo.controller.gateway.interceptor.StartHandler;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 
@@ -11,7 +11,7 @@ import org.noear.solon.annotation.Mapping;
  */
 @Mapping("/api/v1/app/**")
 @Controller
-public class ApiGatewayForApp extends ApiGateway {
+public class ApiGatewayForApp extends ApiGatewayBase {
     @Override
     protected void register() {
         before(StartHandler.class);
