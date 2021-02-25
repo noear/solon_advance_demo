@@ -1,13 +1,13 @@
 package demo.controller.apis;
 
 import demo.controller.ApiBase;
-import demo.dso.mapper.ConfigMapper;
+import demo.dso.service.ConfigService;
 import demo.model.db.WaterCfgPropertiesDo;
 import demo.model.view.ConfigVo;
 import org.noear.solon.annotation.Component;
+import org.noear.solon.annotation.Inject;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.extend.validation.annotation.NotEmpty;
-import org.noear.weed.annotation.Db;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,14 +18,14 @@ import java.util.stream.Collectors;
 @Component(tag = "api")
 public class API_config_get extends ApiBase {
 
-    @Db
-    ConfigMapper configMapper;
+    @Inject
+    ConfigService configService;
 
     @NotEmpty("tag")
     @Mapping("config.get")
     public List<ConfigVo> exec(String tag) throws Throwable {
         //1.根据tag查询配置信息
-        List<WaterCfgPropertiesDo> listD = configMapper.getConfigsByTag(tag);
+        List<WaterCfgPropertiesDo> listD = configService.getConfigsByTag(tag);
 
         //2.转为视图格式
         return listD.stream()

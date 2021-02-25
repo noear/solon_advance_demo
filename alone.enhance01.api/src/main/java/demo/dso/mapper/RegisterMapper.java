@@ -12,6 +12,7 @@ import org.noear.weed.annotation.Db;
 import org.noear.weed.xml.Namespace;
 import demo.model.db.*;
 
+@Db("db1")
 @Namespace("demo.dso.mapper.RegisterMapper")
 public interface RegisterMapper{
     //添加服务

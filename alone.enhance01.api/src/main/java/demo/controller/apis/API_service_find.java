@@ -1,10 +1,9 @@
 package demo.controller.apis;
 
-import cn.hutool.crypto.SecureUtil;
 import demo.controller.ApiBase;
 import demo.controller.ApiCodes;
-import demo.dso.mapper.ConfigMapper;
-import demo.dso.mapper.RegisterMapper;
+import demo.dso.service.ConfigService;
+import demo.dso.service.RegisterService;
 import demo.model.db.WaterCfgPropertiesDo;
 import demo.model.db.WaterRegServiceDo;
 import demo.model.view.DiscoverVo;
@@ -12,9 +11,9 @@ import demo.model.view.ServiceVo;
 import org.noear.snack.ONode;
 import org.noear.solon.Utils;
 import org.noear.solon.annotation.Component;
+import org.noear.solon.annotation.Inject;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.extend.validation.annotation.NotEmpty;
-import org.noear.weed.annotation.Db;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,19 +24,19 @@ import java.util.List;
 @Component(tag = "api")
 public class API_service_find extends ApiBase {
 
-    @Db
-    RegisterMapper registerMapper;
+    @Inject
+    RegisterService registerService;
 
-    @Db
-    ConfigMapper configMapper;
+    @Inject
+    ConfigService configService;
 
     @NotEmpty({"service"})
     @Mapping("service.find")
     public DiscoverVo exec(String service) throws Throwable {
         DiscoverVo discoverVo = new DiscoverVo();
 
-        WaterCfgPropertiesDo configD = configMapper.getConfig("_gateway", service);
-        List<WaterRegServiceDo> listD = registerMapper.getServiceList(service);
+        WaterCfgPropertiesDo configD = configService.getConfig("_gateway", service);
+        List<WaterRegServiceDo> listD = registerService.getServiceList(service);
 
         if(Utils.isEmpty(configD.value)){
             discoverVo.url = "";

@@ -12,6 +12,7 @@ import org.noear.weed.annotation.Db;
 import org.noear.weed.xml.Namespace;
 import demo.model.db.*;
 
+@Db("db1")
 @Namespace("demo.dso.mapper.ConfigMapper")
 public interface ConfigMapper{
     //获取配置列表

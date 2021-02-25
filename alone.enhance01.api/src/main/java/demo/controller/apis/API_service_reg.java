@@ -2,12 +2,12 @@ package demo.controller.apis;
 
 import cn.hutool.crypto.SecureUtil;
 import demo.controller.ApiBase;
-import demo.dso.mapper.RegisterMapper;
+import demo.dso.service.RegisterService;
 import demo.model.db.WaterRegServiceDo;
 import org.noear.solon.annotation.Component;
+import org.noear.solon.annotation.Inject;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.extend.validation.annotation.NotEmpty;
-import org.noear.weed.annotation.Db;
 
 /**
  * @author noear 2021/2/11 created
@@ -15,8 +15,8 @@ import org.noear.weed.annotation.Db;
 @Component(tag = "api")
 public class API_service_reg extends ApiBase {
 
-    @Db
-    RegisterMapper registerMapper;
+    @Inject
+    RegisterService registerService;
 
     @NotEmpty({"service", "address"})
     @Mapping("service.reg")
@@ -31,11 +31,6 @@ public class API_service_reg extends ApiBase {
         model.is_unstable = is_unstable;
 
         //2.更新服务信息
-        boolean isOk = registerMapper.udpService(model) > 0;
-
-        if (!isOk) {
-            //3.如果更新影响数为0，则需要插入
-            registerMapper.addService(model);
-        }
+        registerService.regService(model.name, model);
     }
 }

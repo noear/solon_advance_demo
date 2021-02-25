@@ -3,7 +3,9 @@ package demo.controller.apis;
 import cn.hutool.crypto.SecureUtil;
 import demo.controller.ApiBase;
 import demo.dso.mapper.RegisterMapper;
+import demo.dso.service.RegisterService;
 import org.noear.solon.annotation.Component;
+import org.noear.solon.annotation.Inject;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.extend.validation.annotation.NotEmpty;
 import org.noear.weed.annotation.Db;
@@ -14,8 +16,8 @@ import org.noear.weed.annotation.Db;
 @Component(tag = "api")
 public class API_service_unreg extends ApiBase {
 
-    @Db
-    RegisterMapper registerMapper;
+    @Inject
+    RegisterService registerService;
 
     @NotEmpty({"service", "address"})
     @Mapping("service.unreg")
@@ -24,6 +26,6 @@ public class API_service_unreg extends ApiBase {
         String key = SecureUtil.md5(service + "#" + address);
 
         //1.删除注册的服务
-        registerMapper.delService(key);
+        registerService.delService(service, key);
     }
 }

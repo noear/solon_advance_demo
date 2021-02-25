@@ -22,7 +22,7 @@ public class Config {
     /**
      * 配置数据源
      * */
-    @Bean
+    @Bean("db1")
     public DataSource db1(@Inject("${test.db1}") HikariDataSource ds) {
         return ds;
     }
