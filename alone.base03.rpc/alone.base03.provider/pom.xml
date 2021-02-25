@@ -32,6 +32,12 @@
             <artifactId>alone.base03.interface</artifactId>
             <version>demo</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>solon-test</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
