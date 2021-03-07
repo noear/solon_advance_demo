@@ -1,10 +1,10 @@
 package demo;
 
-import org.noear.mlog.Logger;
-import org.noear.mlog.LoggerFactory;
-import org.noear.mlog.utils.Tags;
 import org.noear.solon.Solon;
 import org.noear.solon.core.handle.Context;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 
 /**
  * @author noear 2021/2/10 created
@@ -19,9 +19,10 @@ public class App {
             Context ctx = Context.current();
 
             if (ctx == null) {
-                logger.error(err);
+                logger.error("{}", err);
             } else {
-                logger.error(Tags.tag0(ctx.path()), err);
+                MDC.put("tag0", ctx.path());
+                logger.error("{}", err);
             }
         });
     }

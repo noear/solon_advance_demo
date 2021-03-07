@@ -1,10 +1,10 @@
 package demo.controller.gateway.interceptor;
 
-import org.noear.mlog.Logger;
-import org.noear.mlog.LoggerFactory;
-import org.noear.mlog.utils.Tags;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.Handler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 
 /**
  * @author noear 2021/2/10 created
@@ -22,12 +22,14 @@ public class EndHandler implements Handler {
 
         //记录接口输入输出日志
         if (c.result != null) {
-            log.info(Tags.tag0(c.pathNew()), "\ni:: {}\no:: {}", c.paramMap(), c.result);
+            MDC.put("tag0", c.pathNew());
+            log.info("\ni:: {}\no:: {}", c.paramMap(), c.result);
         }
 
         //记录异常
         if (c.errors != null) {
-            log.error(Tags.tag0(c.pathNew()), "\ni:: {}\no:: {}", c.paramMap(), c.errors);
+            MDC.put("tag0", c.pathNew());
+            log.error("\ni:: {}\no:: {}", c.paramMap(), c.errors);
         }
     }
 }
