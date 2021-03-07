@@ -5,7 +5,6 @@ import org.noear.snack.ONode;
 import org.noear.solon.Utils;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
-import org.noear.solon.core.handle.Context;
 
 import java.util.Base64;
 
@@ -17,6 +16,27 @@ import java.util.Base64;
 public class ApiGatewayForWeb extends ApiGateway {
     @Override
     protected void register() {
+        filter((c, chain) -> {
+            String josn_b64 = c.body();
+            if (Utils.isEmpty(josn_b64)) {
+                throw ApiCodes.CODE_4002003;
+            }
+
+            String json = new String(Base64.getDecoder().decode(josn_b64));
+
+            ONode node = ONode.loadStr(json);
+
+            //1.设定新路径（网关，将使用新路径做路由）
+            c.pathNew(node.get("method").getString());
+
+            //2.转换参数
+            node.get("data").forEach((k, v) -> {
+                c.paramSet(k, v.getString());
+            });
+
+            chain.doFilter(c);
+        });
+
         before(StartHandler.class);
         before(AuthJwtHandler.class);
 
@@ -30,25 +50,5 @@ public class ApiGatewayForWeb extends ApiGateway {
     protected boolean allowPathMerging() {
         //网关内的路由，不合并路径
         return false;
-    }
-
-    @Override
-    protected void handlePre(Context c) throws Throwable {
-        String josn_b64 = c.body();
-        if(Utils.isEmpty(josn_b64)){
-            throw ApiCodes.CODE_4002003;
-        }
-
-        String json = new String(Base64.getDecoder().decode(josn_b64));
-
-        ONode node = ONode.loadStr(json);
-
-        //1.设定新路径（网关，将使用新路径做路由）
-        c.pathNew(node.get("method").getString());
-
-        //2.转换参数
-        node.get("data").forEach((k,v)->{
-            c.paramSet(k,v.getString());
-        });
     }
 }
