@@ -11,6 +11,7 @@ import org.noear.solon.core.handle.MethodType;
 import org.noear.solon.core.handle.UploadedFile;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * @author noear 2021/2/8 created
@@ -34,9 +35,9 @@ public class ParamController {
      * 通过注入，获取Post上传的文件和其它参数
      */
     @Mapping(value = "/param/file", method = MethodType.POST)
-    public String param_file(String name, UploadedFile file) {
+    public String param_file(String name, UploadedFile file) throws IOException {
         if (file != null) {
-            return Utils.getString(file.content, "utf-8");
+            return Utils.transferToString(file.content, "utf-8");
         } else {
             return helloService.hello(name);
         }
