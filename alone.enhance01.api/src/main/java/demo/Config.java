@@ -9,7 +9,7 @@ import org.noear.solon.annotation.Inject;
 import org.noear.solon.core.cache.CacheService;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.Result;
-import org.noear.solon.extend.validation.ValidatorFailureHandler;
+import org.noear.solon.validation.ValidatorFailureHandler;
 import org.noear.weed.cache.LocalCache;
 
 import javax.sql.DataSource;

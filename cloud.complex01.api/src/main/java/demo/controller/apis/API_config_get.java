@@ -6,7 +6,7 @@ import demo.model.db.WaterCfgPropertiesDo;
 import demo.model.view.ConfigVo;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.annotation.Mapping;
-import org.noear.solon.extend.validation.annotation.NotEmpty;
+import org.noear.solon.validation.annotation.NotEmpty;
 import org.noear.weed.annotation.Db;
 
 import java.util.List;

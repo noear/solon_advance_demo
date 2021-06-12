@@ -5,7 +5,7 @@ import demo.dso.service.ConfigService;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.annotation.Inject;
 import org.noear.solon.annotation.Mapping;
-import org.noear.solon.extend.validation.annotation.NotEmpty;
+import org.noear.solon.validation.annotation.NotEmpty;
 
 /**
  * @author noear 2021/2/11 created

@@ -5,7 +5,7 @@ import demo.controller.ApiBase;
 import demo.dso.mapper.RegisterMapper;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.annotation.Mapping;
-import org.noear.solon.extend.validation.annotation.NotEmpty;
+import org.noear.solon.validation.annotation.NotEmpty;
 import org.noear.weed.annotation.Db;
 
 /**
