@@ -5,8 +5,8 @@ import java.util.*;
 
 import org.noear.solon.annotation.Inject;
 import org.noear.solon.extend.aspect.annotation.Service;
-import org.noear.solon.extend.data.annotation.Cache;
-import org.noear.solon.extend.data.annotation.CachePut;
+import org.noear.solon.data.annotation.Cache;
+import org.noear.solon.data.annotation.CachePut;
 import demo.model.db.*;
 
 @Service

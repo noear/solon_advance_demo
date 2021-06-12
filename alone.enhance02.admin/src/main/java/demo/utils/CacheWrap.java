@@ -1,6 +1,6 @@
 package demo.utils;
 
-import org.noear.solon.core.cache.CacheService;
+import org.noear.solon.data.cache.CacheService;
 import org.noear.weed.cache.ICacheServiceEx;
 
 /**
