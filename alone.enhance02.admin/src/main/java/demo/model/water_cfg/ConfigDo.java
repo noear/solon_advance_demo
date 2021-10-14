@@ -1,11 +1,10 @@
 package demo.model.water_cfg;
 
 import com.zaxxer.hikari.HikariDataSource;
-import demo.dso.ConfigType;
 import lombok.Getter;
+import org.noear.redisx.RedisClient;
 import org.noear.snack.ONode;
 import org.noear.water.utils.ConfigUtils;
-import org.noear.water.utils.RedisX;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
 import org.noear.weed.cache.ICacheServiceEx;
@@ -94,12 +93,12 @@ public class ConfigDo
     /**
      * 获取 rd:RedisX
      */
-    public RedisX getRd(int db) {
-        return new RedisX(getProp(), db);
+    public RedisClient getRd(int db) {
+        return new RedisClient(getProp(), db);
     }
 
-    public RedisX getRd(int db, int maxTotaol) {
-        return new RedisX(getProp(), db, maxTotaol);
+    public RedisClient getRd(int db, int maxTotaol) {
+        return new RedisClient(getProp(), db, maxTotaol);
     }
 
     /**
