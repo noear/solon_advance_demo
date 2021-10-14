@@ -12,7 +12,7 @@
     <parent>
         <groupId>org.noear</groupId>
         <artifactId>solon-parent</artifactId>
-        <version>1.5.44</version>
+        <version>1.5.45</version>
         <relativePath/>
     </parent>
 
@@ -20,9 +20,7 @@
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
 
-        <weed3.ver>3.3.22</weed3.ver>
-        <water.ver>2.2.0</water.ver>
-        <bcf.ver>2.1.0</bcf.ver>
+        <bcf.ver>2.1.11</bcf.ver>
     </properties>
 
     <dependencies>

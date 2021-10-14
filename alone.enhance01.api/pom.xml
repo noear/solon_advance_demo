@@ -12,15 +12,13 @@
     <parent>
         <groupId>org.noear</groupId>
         <artifactId>solon-parent</artifactId>
-        <version>1.5.44</version>
+        <version>1.5.45</version>
         <relativePath/>
     </parent>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
-
-        <weed3.ver>3.3.22</weed3.ver>
     </properties>
 
     <dependencies>
