@@ -120,7 +120,6 @@ public class ConfigDo
     }
 
     public DbContext getDb(boolean pool) {
-        DbContext db = new DbContext();
         Properties prop = getProp();
         String url = prop.getProperty("url");
 
@@ -152,13 +151,9 @@ public class ConfigDo
                 source.setDriverClassName(driverClassName);
             }
 
-            db.dataSourceSet(source);
-            db.schemaSet(schema);
+            return new DbContext(source, schema);
         } else {
-            db.propSet(getProp());
+            return new DbContext(prop);
         }
-
-        return db;
     }
-
 }
