@@ -24,7 +24,7 @@ public class Config {
     }
 
     public static void tryInit() {
-        WaterClient.Config.getProperties(WW.water_bcf).forEach((k, v) -> {
+        WaterClient.Config.getProperties("water_bcf").forEach((k, v) -> {
             if (Solon.cfg().isDebugMode()) {
                 String key = k.toString();
                 if (key.indexOf(".session.") < 0) {
