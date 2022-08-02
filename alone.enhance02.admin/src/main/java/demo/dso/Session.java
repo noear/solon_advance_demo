@@ -19,4 +19,12 @@ public final class Session extends SessionBase {
         setLoginName(subject.login_name);
         setDisplayName(subject.display_name);
     }
+
+    public String getValidation() {
+        return localGet("Validation_String", "");
+    }
+
+    public void setValidation(String validation) {
+        localSet("Validation_String", validation.toLowerCase());
+    }
 }

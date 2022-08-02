@@ -1,19 +1,21 @@
 package demo.controller;
 
 import demo.dso.Session;
-import org.noear.bcf.BcfClient;
-import org.noear.bcf.BcfUtil;
-import org.noear.bcf.models.BcfResourceModel;
-import org.noear.bcf.models.BcfUserModel;
+import lombok.extern.slf4j.Slf4j;
+import org.noear.grit.client.GritClient;
+import org.noear.grit.client.GritUtil;
+import org.noear.grit.model.domain.Resource;
+import org.noear.grit.model.domain.Subject;
 import org.noear.solon.Utils;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.MethodType;
 import org.noear.solon.core.handle.ModelAndView;
+import org.noear.solon.core.handle.Result;
 import org.noear.water.utils.ImageUtils;
 import org.noear.water.utils.RandomUtils;
-import org.noear.water.utils.TextUtils;
+import org.slf4j.MDC;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -25,6 +27,7 @@ import java.io.IOException;
  * @author noear 2014-10-19
  * @since 1.0
  */
+@Slf4j
 @Controller
 public class LoginController extends BaseController {
 
@@ -43,12 +46,22 @@ public class LoginController extends BaseController {
 
     //$共享SESSOIN$::自动跳转
     @Mapping("/login/auto")
-    public void login_auto() throws Exception {
-        int puid = Session.current().getPUID();
-        if (puid > 0) {
-            String def_url = BcfClient.getUserFirstResource(puid).uri_path;
-            if (Utils.isEmpty(def_url) == false) {
-                redirect(def_url);
+    public void login_auto(Context ctx) throws Exception {
+        long subjectId = Session.current().getSubjectId();
+
+        if (subjectId > 0) {
+            String link_uri = GritClient.global().auth().getUriFrist(subjectId).link_uri;
+
+            if (Utils.isEmpty(link_uri) == false) {
+                //日志一下
+                String userName = Session.current().getLoginName();
+
+                MDC.put("tag1", ctx.path());
+                MDC.put("tag2", userName);
+
+                log.info("userName={}, ip={}, 自动登录成功...", userName, ctx.realIp());
+
+                redirect(link_uri);
                 return;
             }
         }
@@ -57,38 +70,43 @@ public class LoginController extends BaseController {
     }
 
     @Mapping("/login/ajax/check")  // Map<,> 返回[json]  (ViewModel 是 Map<String,Object> 的子类)
-    public ModelAndView login_ajax_check(String userName, String passWord, String captcha) throws Exception {
+    public Result login_ajax_check(Context ctx, String userName, String passWord, String captcha) throws Exception {
+
+        //空内容检查
+        if (Utils.isEmpty(captcha)) {
+            return Result.failure("提示：请输入验证码！");
+        }
+
+        if (Utils.isEmpty(userName) || Utils.isEmpty(passWord)) {
+            return Result.failure("提示：请输入账号和密码！");
+        }
 
         //验证码检查
-        if (!captcha.toLowerCase().equals(Session.current().getValidation())) {
-            return viewModel.set("code", 0).set("msg", "提示：验证码错误！");
+        MDC.put("tag1", ctx.path());
+        MDC.put("tag2", userName);
+
+        String captchaOfSessoin = Session.current().getValidation();
+        if (captcha.equalsIgnoreCase(captchaOfSessoin) == false) {
+            log.info("userName={}, captcha={}, captchaOfSessoin={}", userName, captcha, captchaOfSessoin);
+            return Result.failure("提示：验证码错误！");
         }
 
-        if (TextUtils.isEmpty(userName) || TextUtils.isEmpty(passWord)) {
-            return viewModel.set("code", 0).set("msg", "提示：请输入账号和密码！");
-        }
+        Subject subject = GritClient.global().auth().login(userName, passWord);
 
-        BcfUserModel user = BcfClient.login(userName, passWord);
+        if (Subject.isEmpty(subject)) {
+            return Result.failure("提示：账号或密码不对！");
+        } else {
+            log.info("userName={}, ip={}, 登录成功...", userName, ctx.realIp());
 
-        if (user.puid == 0)
-            return viewModel.set("code", 0).set("msg", "提示：账号或密码不对！"); //set 直接返回；有利于设置后直接返回，不用另起一行
-        else {
+            //用户登录::成功
+            Session.current().loadSubject(subject);
+            Resource res = GritClient.global().auth().getUriFrist(subject.subject_id);
 
-            Session.current().loadModel(user);
-
-            //新方案 //noear,20181120,(uadmin)
-            BcfResourceModel res = BcfClient.getUserFirstResource(user.puid);
-            String def_url = null;
-
-            if (TextUtils.isEmpty(res.uri_path)) {
-                return viewModel.set("code", 0)
-                        .set("msg", "提示：请联系管理员开通权限");
+            if (Utils.isEmpty(res.link_uri)) {
+                return Result.failure("提示：请联系管理员开通权限！");
             } else {
-                def_url = BcfUtil.buildBcfUnipath(res);
-
-                return viewModel.set("code", 1)
-                        .set("msg", "ok")
-                        .set("url", def_url);
+                String resUrl = GritUtil.buildDockUri(res);
+                return Result.succeed(resUrl);
             }
         }
     }
