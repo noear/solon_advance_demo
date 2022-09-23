@@ -35,8 +35,7 @@ public class DbWaterCfgApi {
                     }
                 })
                 .orderBy("logger asc")
-                .select("*")
-                .getList(LoggerDo.class);
+                .selectList("*",LoggerDo.class);
     }
 
     //
@@ -45,8 +44,7 @@ public class DbWaterCfgApi {
             return db().table("water_cfg_logger")
                     .where("logger = ?", logger)
                     .limit(1)
-                    .select("*")
-                    .getItem(LoggerDo.class);
+                    .selectItem("*", LoggerDo.class);
         }catch (Exception ex){
             throw new RuntimeException(ex);
         }
@@ -57,8 +55,7 @@ public class DbWaterCfgApi {
         return db().table("water_cfg_whitelist")
                 .groupBy("tag")
                 .orderByAsc("tag")
-                .select("tag,count(*) counts")
-                .getList(TagCountsVo.class);
+                .selectList("tag,count(*) counts", TagCountsVo.class);
     }
 
     //获取ip白名单列表
@@ -74,8 +71,7 @@ public class DbWaterCfgApi {
                         tb.andLk("value", key + "%");
                     }
                 })
-                .select("*")
-                .getList(WhitelistDo.class);
+                .selectList("*", WhitelistDo.class);
     }
 
     //新增ip白名单
@@ -145,8 +141,7 @@ public class DbWaterCfgApi {
     public static WhitelistDo getWhitelist(int row_id) throws SQLException {
         return db().table("water_cfg_whitelist")
                 .where("row_id = ?", row_id)
-                .select("*")
-                .getItem(WhitelistDo.class);
+                .selectItem("*", WhitelistDo.class);
     }
 
     public static List<WhitelistDo> getWhitelistByIds(String ids) throws SQLException {
@@ -157,8 +152,7 @@ public class DbWaterCfgApi {
 
         return db().table("water_cfg_whitelist")
                 .whereIn("row_id", list)
-                .select("*")
-                .getList(WhitelistDo.class);
+                .selectList("*", WhitelistDo.class);
     }
 
     //加载IP白名单到静态缓存里
@@ -173,7 +167,7 @@ public class DbWaterCfgApi {
                 .andEq("value", val)
                 .caching(CacheUtil.data).usingCache(60)
                 .cacheTag("whitelist")
-                .exists();
+                .selectExists();
     }
 
     public static boolean hasGateway(String name) {
@@ -181,7 +175,7 @@ public class DbWaterCfgApi {
             return db().table("water_cfg_properties")
                     .whereEq("tag", "_gateway")
                     .andEq("key", name)
-                    .exists();
+                    .selectExists();
         }catch (Exception ex){
             return false;
         }
@@ -229,8 +223,7 @@ public class DbWaterCfgApi {
     public static List<ConfigDo> getGateways() throws SQLException {
         return db().table("water_cfg_properties")
                 .whereEq("type", ConfigType.water_gateway)
-                .select("tag,key,row_id,type,is_enabled")
-                .getList(ConfigDo.class);
+                .selectList("tag,key,row_id,type,is_enabled", ConfigDo.class);
     }
 
     public static void delConfigByIds(int act, String ids) throws SQLException {
@@ -280,8 +273,7 @@ public class DbWaterCfgApi {
 
         return db().table("water_cfg_properties")
                 .whereIn("row_id", list)
-                .select("*")
-                .getList(ConfigDo.class);
+                .selectList("*", ConfigDo.class);
     }
 
 
@@ -323,8 +315,7 @@ public class DbWaterCfgApi {
         return db().table("water_cfg_properties")
                 .groupBy("tag")
                 .orderByAsc("tag")
-                .select("tag,count(*) counts")
-                .getList(TagCountsVo.class);
+                .selectList("tag,count(*) counts", TagCountsVo.class);
     }
 
     // 获取有特定类型配置的TAG
@@ -333,8 +324,7 @@ public class DbWaterCfgApi {
                 .where("type = ?", type)
                 .groupBy("tag")
                 .orderByAsc("tag")
-                .select("tag, COUNT(*) AS counts")
-                .getList(TagCountsVo.class);
+                .selectList("tag, COUNT(*) AS counts", TagCountsVo.class);
     }
 
     //编辑功能，根据row_id获取config信息。
@@ -345,8 +335,7 @@ public class DbWaterCfgApi {
 
         return db().table("water_cfg_properties")
                 .where("row_id = ?", row_id)
-                .select("*")
-                .getItem(ConfigDo.class);
+                .selectItem("*", ConfigDo.class);
     }
 
 
@@ -387,9 +376,8 @@ public class DbWaterCfgApi {
                 .whereEq("tag", tag)
                 .andEq("key", name)
                 .limit(1)
-                .select("*")
                 .caching(CacheUtil.data).usingCache(cache)
-                .getItem(ConfigDo.class);
+                .selectItem("*", ConfigDo.class);
     }
 
     public static List<ConfigDo> getConfigsByTag(String tag, String key, int state) throws SQLException {
@@ -401,8 +389,7 @@ public class DbWaterCfgApi {
                         tb.and("`key` like ?", "%" + key + "%");
                     }
                 })
-                .select("*")
-                .getList(ConfigDo.class);
+                .selectList("*", ConfigDo.class);
     }
 
     public static List<ConfigDo> getConfigsByType(String tag, int type) throws SQLException {
@@ -413,8 +400,7 @@ public class DbWaterCfgApi {
                         tb.and("tag = ?", tag);
                     }
                 })
-                .select("*")
-                .getList(ConfigDo.class);
+                .selectList("*", ConfigDo.class);
     }
 
     public static List<ConfigDo> getConfigTagKeyByType(String tag, int type) throws SQLException {
@@ -425,8 +411,7 @@ public class DbWaterCfgApi {
                         tb.and("tag = ?", tag);
                     }
                 })
-                .select("tag,key")
-                .getList(ConfigDo.class);
+                .selectList("tag,key", ConfigDo.class);
     }
 
     //====================================================
@@ -436,8 +421,7 @@ public class DbWaterCfgApi {
         return db().table("water_cfg_properties")
                 .whereEq("type", ConfigType.db)
                 .orderBy("`tag`,`key`")
-                .select("*")
-                .getList(ConfigDo.class);
+                .selectList("*", ConfigDo.class);
     }
 
     //获取type=10的配置（结构化数据库）
@@ -446,16 +430,14 @@ public class DbWaterCfgApi {
                 .whereEq("type", ConfigType.db)
                 .orEq("type",ConfigType.water_logger)
                 .orderBy("`tag`,`key`")
-                .select("*")
-                .getList(ConfigDo.class);
+                .selectList("*", ConfigDo.class);
     }
 
     //获取type=10,11,12的配置（结构化数据库 + 非结构化数据库）
     public static List<ConfigDo> getDbConfigsEx() throws SQLException {
         return db().table("water_cfg_properties")
                 .where("type >=10 AND type<20")
-                .select("*")
-                .getList(ConfigDo.class);
+                .selectList("*", ConfigDo.class);
     }
 
     //====================================================
@@ -465,8 +447,7 @@ public class DbWaterCfgApi {
         return db().table("water_cfg_logger").whereEq("is_enabled",1)
                 .groupBy("tag")
                 .orderByAsc("tag")
-                .select("tag,count(*) counts")
-                .getList(TagCountsVo.class);
+                .selectList("tag,count(*) counts", TagCountsVo.class);
     }
 
     //根据tag获取列表。
@@ -481,8 +462,7 @@ public class DbWaterCfgApi {
                         tb.orderBy("logger ASC");
                     }
                 })
-                .select("*")
-                .getList(LoggerDo.class);
+                .selectList("*", LoggerDo.class);
 
     }
 
@@ -491,8 +471,7 @@ public class DbWaterCfgApi {
         return db().table("water_cfg_logger")
                 .where("logger_id=?", logger_id)
                 .limit(1)
-                .select("*")
-                .getItem(LoggerDo.class);
+                .selectItem("*", LoggerDo.class);
     }
 
     //设置logger。

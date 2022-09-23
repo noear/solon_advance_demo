@@ -10,7 +10,7 @@ public class RpcConsumerApp {
         Solon.start(RpcConsumerApp.class, args);
 
         //通过Aop，从容器里获取
-        HelloTest helloTest = Aop.get(HelloTest.class);
+        HelloTest helloTest = Solon.context().getBean(HelloTest.class);
         helloTest.test();
     }
 }
