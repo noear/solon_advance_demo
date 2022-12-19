@@ -10,7 +10,7 @@ import org.noear.solon.data.cache.CacheService;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.Result;
 import org.noear.solon.validation.ValidatorFailureHandler;
-import org.noear.weed.cache.LocalCache;
+import org.noear.wood.cache.LocalCache;
 
 import javax.sql.DataSource;
 import java.lang.annotation.Annotation;

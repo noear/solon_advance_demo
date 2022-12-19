@@ -8,7 +8,7 @@ import org.noear.solon.annotation.Component;
 import org.noear.solon.annotation.Inject;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.validation.annotation.NotEmpty;
-import org.noear.weed.annotation.Db;
+import org.noear.wood.annotation.Db;
 
 /**
  * @author noear 2021/2/12 created

@@ -1,7 +1,7 @@
 package demo.utils;
 
 import org.noear.solon.data.cache.CacheService;
-import org.noear.weed.cache.ICacheServiceEx;
+import org.noear.wood.cache.ICacheServiceEx;
 
 /**
  * @author noear 2021/2/25 created

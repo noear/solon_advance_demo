@@ -14,7 +14,7 @@ import org.noear.solon.Utils;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.validation.annotation.NotEmpty;
-import org.noear.weed.annotation.Db;
+import org.noear.wood.annotation.Db;
 
 import java.util.ArrayList;
 import java.util.List;

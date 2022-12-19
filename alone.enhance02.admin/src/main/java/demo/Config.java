@@ -5,7 +5,7 @@ import org.noear.solon.annotation.Configuration;
 import org.noear.water.WW;
 import org.noear.water.WaterClient;
 import org.noear.water.model.ConfigM;
-import org.noear.weed.DbContext;
+import org.noear.wood.DbContext;
 
 /**
  * @author noear 2021/2/11 created

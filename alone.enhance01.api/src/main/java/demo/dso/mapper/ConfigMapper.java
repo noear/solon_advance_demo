@@ -5,11 +5,11 @@ import java.sql.SQLException;
 import java.time.*;
 import java.util.*;
 
-import org.noear.weed.BaseMapper;
-import org.noear.weed.DataItem;
-import org.noear.weed.DataList;
-import org.noear.weed.annotation.Db;
-import org.noear.weed.xml.Namespace;
+import org.noear.wood.BaseMapper;
+import org.noear.wood.DataItem;
+import org.noear.wood.DataList;
+import org.noear.wood.annotation.Db;
+import org.noear.wood.xml.Namespace;
 import demo.model.db.*;
 
 @Db("db1")
