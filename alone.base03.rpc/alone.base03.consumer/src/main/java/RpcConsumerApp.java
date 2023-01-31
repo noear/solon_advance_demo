@@ -1,6 +1,5 @@
 import controller.HelloTest;
 import org.noear.solon.Solon;
-import org.noear.solon.core.Aop;
 
 /**
  * @author noear 2021/2/12 created

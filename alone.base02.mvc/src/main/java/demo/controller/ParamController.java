@@ -37,7 +37,7 @@ public class ParamController {
     @Mapping(value = "/param/file", method = MethodType.POST)
     public String param_file(String name, UploadedFile file) throws IOException {
         if (file != null) {
-            return Utils.transferToString(file.content, "utf-8");
+            return Utils.transferToString(file.getContent(), "utf-8");
         } else {
             return helloService.hello(name);
         }
