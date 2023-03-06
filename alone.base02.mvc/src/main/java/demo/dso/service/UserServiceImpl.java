@@ -2,12 +2,12 @@ package demo.dso.service;
 
 import demo.model.UserModel;
 import org.noear.solon.annotation.Inject;
-import org.noear.solon.aspect.annotation.Service;
+import org.noear.solon.annotation.ProxyComponent;
 
 /**
  * @author noear 2021/2/9 created
  */
-@Service
+@ProxyComponent
 public class UserServiceImpl implements UserService{
     @Inject
     HelloService helloService;
