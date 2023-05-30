@@ -12,7 +12,7 @@
     <parent>
         <groupId>org.noear</groupId>
         <artifactId>solon-parent</artifactId>
-        <version>2.2.1</version>
+        <version>2.3.2</version>
         <relativePath/>
     </parent>
 
@@ -40,13 +40,13 @@
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
-            <version>${hutool.ver}</version>
+            <version>${hutool.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
-            <version>${hikaricp.ver}</version>
+            <version>${hikaricp.version}</version>
         </dependency>
 
         <dependency>
@@ -75,7 +75,7 @@
             <plugin>
                 <groupId>org.noear</groupId>
                 <artifactId>wood-maven-plugin</artifactId>
-                <version>${wood.ver}</version>
+                <version>${wood.version}</version>
                 <dependencies>
                     <dependency>
                         <groupId>mysql</groupId>
