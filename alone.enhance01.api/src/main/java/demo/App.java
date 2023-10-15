@@ -15,15 +15,6 @@ public class App {
     public static void main(String[] args) {
 
 
-        Solon.start(App.class, args).onError(err -> {
-            Context ctx = Context.current();
-
-            if (ctx == null) {
-                logger.error("{}", err);
-            } else {
-                MDC.put("tag0", ctx.path());
-                logger.error("{}", err);
-            }
-        });
+        Solon.start(App.class, args);
     }
 }

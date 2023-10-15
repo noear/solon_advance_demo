@@ -19,12 +19,12 @@ public class CacheWrap implements CacheService {
     }
 
     @Override
-    public Object get(String key) {
-        return real.get(key);
+    public void remove(String key) {
+        real.remove(key);
     }
 
     @Override
-    public void remove(String key) {
-        real.remove(key);
+    public <T> T get(String key, Class<T> clz) {
+        return null;
     }
 }
